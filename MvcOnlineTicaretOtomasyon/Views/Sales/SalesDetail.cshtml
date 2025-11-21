@@ -1,0 +1,36 @@
+﻿@using MvcOnlineTicaretOtomasyon.Models.Classes
+@model List<SalesMovement>
+@{
+    ViewBag.Title = "SalesDetail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<br />
+<h2>Satış Detayı</h2>
+<br />
+<table class="table table-condensed">
+    <tr>
+        <th>Satış ID</th>
+        <th>Ürün</th>
+        <th>Cari</th>
+        <th>Personel</th>
+        <th>Fiyat</th>
+        <th>Adet</th>
+        <th>Toplam</th>
+        <th>Tarih</th>        
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.SalesId</td>
+            <td>@item.Product.ProductName</td>
+            <td>@item.Current.CurrentName @item.Current.CurrentSurName</td>
+            <td>@item.Staff.StaffName @item.Staff.StaffSurName</td>
+            <td>@item.Price</td>
+            <td>@item.Quantity</td>
+            <td>@item.TotalPrice</td>
+            <td>@item.Date</td>           
+        </tr>
+    }
+
+</table>
+<button class="btn btn-default" style="background-color:antiquewhite">Yazdır</button>

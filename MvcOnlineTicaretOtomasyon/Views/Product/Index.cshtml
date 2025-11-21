@@ -1,0 +1,59 @@
+﻿@using MvcOnlineTicaretOtomasyon.Models.Classes;
+@using PagedList;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<Product>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<br />
+@using (Html.BeginForm("Index", "Product", FormMethod.Get)) 
+{
+   <p>
+       Ürün Adı: @Html.TextBox("searchString" , ViewBag.srch as string)
+       <input type="submit" value="Ara"  />
+   </p>
+}
+<br />
+<table class="table table-bordered">
+    <tr>
+        <th>Ürün</th>
+        <th>Marka</th>
+        <th>Stok</th>
+        <th>Alış Fiyatı</th>
+        <th>Satış Fiyatı</th>
+        <th>Kategori</th>
+        <th>Sil</th>
+        <th>Güncelle</th>
+        <th>Satış Yap</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.ProductName</td>
+            <td>@item.Brand</td>
+            <td>@item.Stock</td>
+            <td>@item.PurchasePrice ₺</td>
+            <td>@item.SalesPrice ₺</td>
+            <td>@item.Category.CategoryName</td>
+            <td>
+                <a href="/Product/DeleteProduct/@item.ProductId" class="btn btn-danger">Sil</a>
+            </td>
+            <td>
+                <a href="/Product/GetProduct/@item.ProductId" class="btn btn-success">Güncelle</a>
+            </td>
+            <td>
+                <a href="/Product/Sell/@item.ProductId" class="btn btn-default" style="background-color:dimgray">Satış Yap</a>
+            </td>
+        </tr>
+    }
+</table>
+@Html.PagedListPager((IPagedList)Model, page1 => Url.Action("Index", new { page1, searchString = ViewBag.srch }),
+    new PagedListRenderOptions
+    {
+        LiElementClasses = new List<string>
+        {"page-link" }
+    })
+
+<a href="/Product/CreateProduct/" class="btn btn-info">Yeni Ürün</a>
+

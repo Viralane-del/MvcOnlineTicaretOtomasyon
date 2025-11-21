@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<script src="~/Scripts/jquery-3.7.0.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<br />
+<br />
+<button class="btn btn-outline-dark" id="btn1">Buton1</button>
+<button class="btn btn-outline-warning" id="btn2">Buton2</button>
+<button class="btn btn-outline-info" id="btn3">Buton3</button>
+<button class="btn btn-default" style="background-color:green" id="btn4">Buton4</button>
+<button class="btn btn-default" style="background-color:blue" id="btn5">Buton5</button>
+
+<script>
+    $('#btn1').click(function () {
+        Swal.fire(
+            'Tebrikler!',
+            'Butona tıkladınız.',
+            'success'
+        )
+    });
+</script>
+
+<script>
+    $('#btn2').click(function () {
+        Swal.fire(
+            "Ekleme İşlemini  Onaylıyor musun?",
+            "Eğer Onaylarsan, Veriler Kalıcı Olarak Eklenecektir.",
+            "question",
+        )
+    });
+</script>
+<script>
+    $('#btn3').click(function () {
+        Swal.fire(
+            "Hata",
+            "Bir şeyler ters gitti!",
+            "error"
+
+        )
+    });
+</script>
+<script>
+    $('#btn4').click(function () { 
+        Swal.fire({
+        title: 'Bu Kategoriyi Eklemek İstiyor musunuz?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Kaydet',
+        denyButtonText: 'Vazgeç'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire('Eklendi!', 'Kategori Başarıyla Eklendi', 'success');
+        } else if (result.isDenied) {
+            Swal.fire('Vazgeçildi!', 'Kategori Eklenmedi', 'info');
+        }
+    });
+});
+</script>
+<script>
+    $('#btn5').click(function () {
+        Swal.fire({
+            title: "Silmek İşlemini Yapmak İstiyor musunuz?",
+            text: "Silinen Veriler Geri Alınamaz",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Evet, Sil!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire("Silindi!", "Başarıyla Silindi", "success");
+            }
+
+
+        });
+    });
+</script>

@@ -1,0 +1,256 @@
+﻿@model MvcOnlineTicaretOtomasyon.Models.Classes.Class3
+@{
+    ViewBag.Title = "Dynamic";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+@*Adım 1*@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="fw-bold mb-0 ms-2">
+                <strong>Fatura & Kalem İşlemleri</strong>
+                <button class="btn btn-sm btn-primary ms-5" data-bs-toggle="modal" data-bs-target="#newOrderModal">Fatura Girişi</button>
+            </h2>
+        </div>
+    </div>
+
+    @*Fatura Listesi*@
+    <div class="panel-body">
+        <table class="table table-striped table-hover align-middle shadow-sm">
+            @foreach (var item in Model.Value1)
+            {
+                <tbody>
+                    <tr>
+                        <td style="color:red; font-weight:bold">Seri-Sıra No : @item.InvoiceSerialNumber - @item.InvoicesEquence </td>
+                        <td style=" font-weight:bold">Vergi Dairesi : @item.TaxOffice </td>
+                        <td style="font-weight:bold">Teslim Eden: @item.Receiver </td>
+                        <td style="font-weight:bold">Teslim Alan: @item.Delivered </td>
+                        <td style=" font-weight:bold">Tarih : @item.Date.ToShortDateString()</td>
+
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th>Açıklama</th>
+                                        <th>Miktar</th>
+                                        <th>Birim</th>
+                                    </tr>
+                                    @{
+                                        var totalBill = 0;
+                                    }
+                                    @foreach (var order in Model.Value2)
+                                    {
+                                        <tr>
+                                            <td>@order.Description</td>
+                                            <td>@order.Quantity</td>
+                                            <td>@order.Amount ₺</td>
+                                        </tr>
+                                        totalBill = totalBill + @Convert.ToInt32(order.Amount);
+                                    }
+                                </tbody>
+                            </table>
+                            <span class="pull-right" style="margin-right:100px;"><strong> Fatura Toplam Tutar :  </strong> @totalBill ₺</span>
+                        </td>
+                    </tr>
+                </tbody>
+            }
+        </table>
+    </div>
+</div>
+
+@*Adım 2*@
+
+<div class="modal fade" id="newOrderModal" tabindex="-1" aria-labelledby="newOrderLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="max-width:900px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newOrderLabel">Yeni Fatura Girişi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <form id="NewOrderForm">
+                <div class="modal-body">
+                    <h5 class="text-danger">Fatura Detayları</h5>
+                    <hr />
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-md-6">
+                            <label class="form-label">Seri No</label>
+                            <input type="text" id="InvoiceSerialNumber" name="InvoiceSerialNumber" placeholder="Seri Numarası" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Sıra No</label>
+                            <input type="text" id="InvoicesEquence" name="InvoicesEquence" placeholder="Sıra Numarası" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Tarih</label>
+                            <input type="text" id="Date" name="Date" placeholder="00/00/00" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Vergi Dairesi</label>
+                            <input type="text" id="TaxOffice" name="TaxOffice" placeholder="Vergi Dairesi" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Saat</label>
+                            <input type="text" id="Hour" name="Hour" placeholder="00:00" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Teslim Eden</label>
+                            <input type="text" id="Receiver" name="Receiver" placeholder="Teslim Eden Cari/Personel" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Teslim Alan</label>
+                            <input type="text" id="Delivered" name="Delivered" placeholder="Teslim Alan Cari/Personel" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Toplam Tutar</label>
+                            <input type="text" id="Total" name="Total" placeholder="0.00 ₺" class="form-control" />
+                        </div>
+                    </div>
+
+                    @*Fatura Kalem Detayları*@
+                    <h5 class="text-danger mt-3">Fatura Kalemleri</h5>
+                    <hr />
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Açıklama</label>
+                            <input type="text" id="Description" name="Description" placeholder="Ürün / Birim Açıklamasını Giriniz" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Miktar</label>
+                            <input type="number" id="Quantity" name="Quantity" placeholder="Miktar Giriniz" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row align-items-end">
+                        <div class="col-md-4">
+                            <label class="form-label">Fiyat</label>
+                            <input type="number" id="UnitPrice" name="UnitPrice" placeholder="Birim Başına Fiyat Miktarı" class="form-control" />
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <a id="addToList" class="btn btn-primary mt-2">Listeye Ekle</a>
+                        </div>
+                    </div>
+
+                    <table id="detailsTable" class="table mt-4">
+                        <thead class="table-secondary">
+                            <tr>
+                                <th>Açıklama</th>
+                                <th>Miktar</th>
+                                <th>Fiyat</th>
+                                <th>Tutar</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                    <button id="saveOrder" type="submit" class="btn btn-danger">Faturayı Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@*Adım 3*@
+
+@section scripts{
+    <script>
+
+        function addNewOrder() {
+            $("#newOrderModal").modal();
+        }
+
+        $("#addToList").click(function (e) {
+
+            e.preventDefault();
+
+            if ($.trim($("#Description").val()) == "" || $.trim($("#Quantity").val()) == "" || $.trim($("#UnitPrice").val()) == "") return;
+
+            var description = $("#Description").val(),
+                quantity = $("#Quantity").val(),
+                UnitPrice = $("#UnitPrice").val(),
+                detailsTableBody = $("#detailsTable tbody");
+
+            var values = '<tr><td>' + description + '</td><td>' + quantity + '</td><td>' + UnitPrice + '</td><td>' + (parseFloat(quantity) * parseInt(UnitPrice)) + '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
+            detailsTableBody.append(values);
+            clearItem();
+        });
+
+        function clearItem() {
+            $("#Description").val('');
+            $("#Quantity").val('');
+            $("#UnitPrice").val('');
+        }
+
+        $(document).on('click', 'a.deleteItem', function (e) {
+            e.preventDefault();
+            var $self = $(this);
+            if ($(this).attr('data-itemId') == "0") {
+                $(this).parents('tr').css("background-color", "#ff6347").fadeOut(800, function () {
+                    $(this).remove();
+                });
+            }
+        });
+
+        function saveOrder(data) {
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: "/Invoice/InvoiceSave",
+                data: data,
+
+                success: function (result) {
+                    alert(result);
+                    location.reload();
+                },
+
+                error: function () {
+                    alert("Error!")
+                }
+            });
+        }
+
+        $("#saveOrder").click(function (e) {
+
+            e.preventDefault();
+
+            var orderArr = [];
+            orderArr.length = 0;
+
+            $.each($("#detailsTable tbody tr"), function () {
+                orderArr.push({
+                    description: $(this).find('td:eq(0)').html(),
+                    quantity: $(this).find('td:eq(1)').html(),
+                    UnitPrice: $(this).find('td:eq(2)').html(),
+                    Amount: $(this).find('td:eq(3)').html()
+                });
+            });
+
+            var data = JSON.stringify({
+                InvoiceSerialNumber: $("#InvoiceSerialNumber").val(),
+                InvoicesEquence: $("#InvoicesEquence").val(),
+                Date: $("#Date").val(),
+                Hour: $("#Hour").val(),
+                TaxOffice: $("#TaxOffice").val(),
+                Receiver: $("#Receiver").val(),
+                Delivered: $("#Delivered").val(),
+                Total: $("#Total").val(),
+                pens: orderArr
+            });
+
+            $.when(saveOrder(data)).then(function (response) {
+                console.log(response);
+            }).fail(function (err) {
+                console.log(err);
+            });
+        });
+    </script>
+}

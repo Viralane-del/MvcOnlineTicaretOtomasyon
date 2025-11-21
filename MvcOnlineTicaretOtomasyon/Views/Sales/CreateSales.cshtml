@@ -1,0 +1,30 @@
+﻿@model MvcOnlineTicaretOtomasyon.Models.Classes.SalesMovement
+@{
+    ViewBag.Title = "CreateSales";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<br />
+<h2>Yeni Satış Sayfası</h2>
+<br />
+<form class="form-group" method="post">
+    @Html.LabelFor(x => x.Product)
+    @Html.DropDownListFor(x => x.ProductId, (List<SelectListItem>)ViewBag.p1, new { @class = "form-control" })
+    <br />
+    @Html.Label("Cari")
+    @Html.DropDownListFor(x => x.CurrentId, (List<SelectListItem>)ViewBag.p2, new { @class = "form-control" })
+    <br />
+    @Html.LabelFor(x => x.Staff)
+    @Html.DropDownListFor(x => x.StaffId, (List<SelectListItem>)ViewBag.p3, new { @class = "form-control" })
+    <br />
+    @Html.LabelFor(x => x.Quantity)
+    @Html.TextBoxFor(x => x.Quantity, new { @class = "form-control" })
+    <br />
+    @Html.LabelFor(x => x.Price)
+    @Html.TextBoxFor(x => x.Price, new { @class = "form-control" })
+    <br />
+    @Html.LabelFor(x => x.TotalPrice)
+    @Html.TextBoxFor(x => x.TotalPrice, new { @class = "form-control" })
+    <br />
+    <button class="btn btn-primary">Satış Yap</button>
+</form>
+

@@ -1,0 +1,56 @@
+﻿@using MvcOnlineTicaretOtomasyon.Models.Classes
+@model List<SalesMovement>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<table id="tbl1" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ürün</th>
+            <th>Cari</th>
+            <th>Personel</th>
+            <th>Adet</th>
+            <th>Fiyat</th>
+            <th>Toplam Fiyat</th>
+            <th>Tarih</th>
+            <th>Güncelle</th>
+            <th>Detaylar</th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tbody>
+            <tr>
+                <td>@item.Product.ProductName</td>
+                <td>@item.Current.CurrentName @item.Current.CurrentSurName</td>
+                <td>@item.Staff.StaffName @item.Staff.StaffSurName</td>
+                <td>@item.Quantity</td>
+                <td>@item.Price ₺</td>
+                <td>@item.TotalPrice ₺</td>
+                <td>@item.Date</td>
+                <td><a href="/Sales/GetSales/@item.SalesId" class="btn btn-warning">Güncelle</a></td>
+                <td><a href="/Sales/SalesDetail/@item.SalesId" class="btn btn-default" style="background-color:goldenrod; color:white">Detay</a></td>
+            </tr>
+        </tbody>
+    }
+
+</table>
+<a href="/Sales/CreateSales" class="btn btn-info">Yeni Satış Yap</a>
+
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+
+<link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+
+<script>
+    $('#tbl1').dataTable({});
+</script>

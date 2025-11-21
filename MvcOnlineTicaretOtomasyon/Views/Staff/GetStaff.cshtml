@@ -1,0 +1,29 @@
+﻿@model MvcOnlineTicaretOtomasyon.Models.Classes.Staff
+@{
+    ViewBag.Title = "GetStaff";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<br />
+<h2>Personel Güncelleme Ekranı</h2>
+<br />
+@using (Html.BeginForm("UpdateStaff", "Staff", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group">
+        @Html.HiddenFor(x => x.StaffId)
+        @Html.LabelFor(x => x.StaffName)
+        @Html.TextBoxFor(x => x.StaffName, new { @class = "form-control" })
+        <br />
+        @Html.LabelFor(x => x.StaffSurName)
+        @Html.TextBoxFor(x => x.StaffSurName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.StaffSurName, "", new { @style = "color:red" })
+        <br />
+        @Html.LabelFor(x => x.StaffImage)
+        <input type="file" name="StaffImage" class="form-control" />
+        <br />
+        @Html.LabelFor(x => x.DepartmentId)
+        @Html.DropDownListFor(x => x.DepartmentId, (List<SelectListItem>)ViewBag.d, new { @class = "form-control" })
+        <br />
+        <button class="btn btn-default" style="background-color:skyblue">Güncelle</button>
+    </div>
+}
+

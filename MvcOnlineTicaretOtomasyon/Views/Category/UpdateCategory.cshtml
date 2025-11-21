@@ -1,0 +1,37 @@
+﻿@model MvcOnlineTicaretOtomasyon.Models.Classes.Category
+@{
+    ViewBag.Title = "UpdateCategory";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<script src="~/Scripts/jquery-3.7.0.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<br />
+<h2>Kategori Güncelleme Sayfası</h2>
+<br />
+@using (Html.BeginForm("UpdateCategory", "Category", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.HiddenFor(x => x.CategoryId)
+        @Html.LabelFor(x => x.CategoryName)
+        @Html.TextBoxFor(x => x.CategoryName, new { @class = "form-control" })
+    </div>
+    <button type="button" class="btn btn-warning" id="btn1">Güncelle</button>
+}
+<script>
+    $('#btn1').click(function () {
+        Swal.fire({
+            title: 'Bu Kategoriyi Güncellemek İstiyor musunuz?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Güncelle',
+            denyButtonText: 'Vazgeç'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $('#updateForm').submit();
+                Swal.fire('Güncellendi!', 'Kategori Başarıyla Güncellendi', 'info');
+            } else if (result.isDenied) {
+                Swal.fire('Vazgeçildi!', 'Kategori Güncellenmedi', 'warning');
+            }
+        });
+    });
+</script>
