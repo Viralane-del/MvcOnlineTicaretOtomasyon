@@ -1,5 +1,4 @@
-Show more
-18:27
+
 🚀 Yeni Online Ticari Otomasyon Sistemi projem yayında!
 
 ASP.NET MVC ile geliştirdiğim kapsamlı ticaret otomasyon platformunu sizlerle paylaşmaktan mutluluk duyuyorum! 💼✨
